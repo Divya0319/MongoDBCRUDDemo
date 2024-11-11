@@ -1,42 +1,49 @@
 package com.fastturtle.mongodbdemo.controllers;
 
-import com.fastturtle.mongodbdemo.ProductDto;
+import com.fastturtle.mongodbdemo.dtos.CategoryDto;
+import com.fastturtle.mongodbdemo.dtos.ProductDto;
+import com.fastturtle.mongodbdemo.models.Category;
 import com.fastturtle.mongodbdemo.models.Product;
-import com.fastturtle.mongodbdemo.repositories.ProductRepo;
+import com.fastturtle.mongodbdemo.services.IProductService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-    private final ProductRepo productRepo;
+    private final IProductService productService;
 
-    public ProductController(ProductRepo productRepo) {
-        this.productRepo = productRepo;
+    public ProductController(IProductService productService) {
+        this.productService = productService;
     }
 
     @PostMapping("/add")
-    public String addProduct(@RequestBody ProductDto productDto) {
-        productRepo.save(from(productDto));
+    public ProductDto addProduct(@RequestBody ProductDto productDto) {
 
-        return "Product added";
+        Product product = from(productDto);
+
+        Product result = productService.createProduct(product);
+
+        return from(result);
     }
 
     @GetMapping("/view")
     public List<ProductDto> getProducts() {
-        return productRepo.findAll().stream()
-                .map(this::from)
-                .collect(Collectors.toList());
+        List<Product> products = productService.getAllProducts();
+        if(!products.isEmpty()) {
+            List<ProductDto> result = products.stream().map(this::from).toList();
+            return result;
+        }
+
+        return null;
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") String productId) {
-        productRepo.deleteByProductId(productId);
-        return "Product deleted";
+    public ProductDto deleteProduct(@PathVariable("id") String productId) {
+        Product deleted = productService.deleteProduct(productId);
+        return from(deleted);
     }
 
     public Product from(ProductDto productDto) {
@@ -44,6 +51,13 @@ public class ProductController {
         product.setProductId(productDto.getId());
         product.setName(productDto.getName());
         product.setDesc(productDto.getDesc());
+        if(productDto.getCategory() != null) {
+            Category category = new Category();
+            category.setCategoryId(productDto.getCategory().getId());
+            category.setName(productDto.getCategory().getName());
+            category.setDesc(productDto.getCategory().getDesc());
+            product.setCategory(category);
+        }
 
         return product;
     }
@@ -53,6 +67,14 @@ public class ProductController {
         productDto.setId(product.getProductId());
         productDto.setName(product.getName());
         productDto.setDesc(product.getDesc());
+
+        if (product.getCategory() != null) {
+            CategoryDto categoryDto = new CategoryDto();
+            categoryDto.setId(product.getCategory().getCategoryId());
+            categoryDto.setName(product.getCategory().getName());
+            categoryDto.setDesc(product.getCategory().getDesc());
+            productDto.setCategory(categoryDto);
+        }
 
         return productDto;
     }

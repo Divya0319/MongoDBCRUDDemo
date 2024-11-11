@@ -5,25 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "product")
-public class Product {
+@Document(collection = "category")
+public class Category {
 
     @Id
-    private ObjectId _id;
+    private ObjectId id;
 
-    private String productId;
+    private String categoryId;
 
     private String name;
 
     private String desc;
-
-    @DBRef
-    private Category category;
 
 }

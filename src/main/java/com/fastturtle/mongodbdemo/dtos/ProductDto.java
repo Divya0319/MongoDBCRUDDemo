@@ -1,4 +1,4 @@
-package com.fastturtle.mongodbdemo;
+package com.fastturtle.mongodbdemo.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +14,7 @@ public class ProductDto {
     private String name;
 
     private String desc;
+
+    private CategoryDto category;
 
 }
