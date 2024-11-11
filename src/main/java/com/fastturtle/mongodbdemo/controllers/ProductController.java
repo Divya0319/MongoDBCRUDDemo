@@ -40,6 +40,12 @@ public class ProductController {
         return null;
     }
 
+    @GetMapping("/view/{id}")
+    public ProductDto getProduct(@PathVariable("id") String productId) {
+        Product product = productService.getProductById(productId);
+        return from(product);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ProductDto deleteProduct(@PathVariable("id") String productId) {
         Product deleted = productService.deleteProduct(productId);
