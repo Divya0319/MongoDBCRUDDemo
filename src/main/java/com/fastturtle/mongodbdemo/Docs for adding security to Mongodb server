@@ -1,0 +1,42 @@
+1. Open Mongodb server instance from ssh
+2. Open its mongod.conf file located in etc/mongod.conf
+3. Enable security by adding line
+    security:
+      authorization: enabled
+
+4. Switch to the admin database:
+
+   use admin
+5. Authenticate as an admin user: If you already have an admin user:
+
+
+   db.auth("admin_username", "admin_password")
+
+6. If you don’t have an admin user(or forgot its password),
+   you’ll need to start MongoDB without authentication and create one:
+
+   Stop the MongoDB service.
+   Restart MongoDB without the authorization: enabled setting in mongod.conf.
+
+   Create an admin user:
+
+   db.createUser({
+     user: "admin_username",
+     pwd: "admin_password",
+     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+   })
+
+7. Grant roles to scalerstudent:   grant readWrite access to scalerstudent on the ecommerceapp database:
+    db.grantRolesToUser("scalerstudent", [{ role: "readWrite", db: "ecommerceapp" }])
+
+8. Re-enable authorization in mongod.conf
+
+9. Restart mongodb server
+
+10. Now, you can safely use scalerstudent user to connect to MongoDB's ecommerceapp database.
+
+11. After assigning the appropriate roles, reconnect using MongoDB Compass:
+
+    Authentication Database: admin
+    Ensure you’re using the scalerstudent credentials.
+    You should now see the ecommerceapp database listed.
