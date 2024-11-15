@@ -16,7 +16,7 @@ public class Category {
     @Id
     private ObjectId id;
 
-    private String categoryId;
+    private Long categoryId;
 
     private String name;
 

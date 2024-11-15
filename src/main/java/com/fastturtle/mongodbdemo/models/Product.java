@@ -17,11 +17,15 @@ public class Product {
     @Id
     private ObjectId _id;
 
-    private String productId;
+    private Long productId;
 
     private String name;
 
     private String desc;
+
+    private Double price;
+
+    private String imageUrl;
 
     @DBRef
     private Category category;

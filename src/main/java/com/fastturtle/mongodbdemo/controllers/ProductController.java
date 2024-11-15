@@ -41,13 +41,13 @@ public class ProductController {
     }
 
     @GetMapping("/view/{id}")
-    public ProductDto getProduct(@PathVariable("id") String productId) {
+    public ProductDto getProduct(@PathVariable("id") Long productId) {
         Product product = productService.getProductById(productId);
         return from(product);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ProductDto deleteProduct(@PathVariable("id") String productId) {
+    public ProductDto deleteProduct(@PathVariable("id") Long productId) {
         Product deleted = productService.deleteProduct(productId);
         return from(deleted);
     }
@@ -57,6 +57,8 @@ public class ProductController {
         product.setProductId(productDto.getId());
         product.setName(productDto.getName());
         product.setDesc(productDto.getDesc());
+        product.setPrice(productDto.getPrice());
+        product.setImageUrl(productDto.getImageUrl());
         if(productDto.getCategory() != null) {
             Category category = new Category();
             category.setCategoryId(productDto.getCategory().getId());
@@ -73,6 +75,8 @@ public class ProductController {
         productDto.setId(product.getProductId());
         productDto.setName(product.getName());
         productDto.setDesc(product.getDesc());
+        productDto.setPrice(product.getPrice());
+        productDto.setImageUrl(product.getImageUrl());
 
         if (product.getCategory() != null) {
             CategoryDto categoryDto = new CategoryDto();

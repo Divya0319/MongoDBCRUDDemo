@@ -21,7 +21,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product getProductById(String id) {
+    public Product getProductById(Long id) {
         Optional<Product> product = productRepo.findByProductId(id);
 
         if(product.isPresent()) {
@@ -60,7 +60,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product deleteProduct(String id) {
+    public Product deleteProduct(Long id) {
         Optional<Product> product = productRepo.findByProductId(id);
         if(product.isPresent()) {
             productRepo.deleteByProductId(id);

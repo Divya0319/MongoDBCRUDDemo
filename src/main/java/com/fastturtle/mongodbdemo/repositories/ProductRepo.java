@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ProductRepo extends MongoRepository<Product, ObjectId> {
 
-    void deleteByProductId(String productId);
+    void deleteByProductId(Long productId);
 
-    Optional<Product> findByProductId(String productId);
+    Optional<Product> findByProductId(Long productId);
 }
