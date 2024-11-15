@@ -26,6 +26,8 @@
      roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
    })
 
+   then do step 5 if not done
+
 7. Grant roles to scalerstudent:   grant readWrite access to scalerstudent on the ecommerceapp database:
     db.grantRolesToUser("scalerstudent", [{ role: "readWrite", db: "ecommerceapp" }])
 
