@@ -31,6 +31,8 @@
 7. Grant roles to scalerstudent:   grant readWrite access to scalerstudent on the ecommerceapp database:
     db.grantRolesToUser("scalerstudent", [{ role: "readWrite", db: "ecommerceapp" }])
 
+    7.1 -> If you want to add more databases to same user, you can simply use above command with new database name(note that it will not error out even if database not exists).
+
 8. Re-enable authorization in mongod.conf
 
 9. Restart mongodb server
