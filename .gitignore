@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore profile-specific configuration files with sensitive data
+application-prod.properties
+application-staging.properties
